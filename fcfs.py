@@ -1,22 +1,22 @@
 # A classe `FirstComeFirstServed` herda a classe `Miner`, e utiliza o algoritmo
 # do FcFs para executar todos os jobs. Isso significa que, dadas as informações
-# de tempo de chegada e ticks de um `HashJob`, o `FirstComeFirstServed` ordena
+# de tempo de chegada e ticks de um `Hasher`, o `FirstComeFirstServed` ordena
 # a lista de jobs por ordem de chegada e simplesmente executa a função de
 # `proof_of_work` responsável pela geração de hashes. Podemos observar algumas
 # coisas diante do uso desse algoritmo de escalonamento quanto à métricas de
-# avaliação. O tempo de espera dos `HashJob` não escalonados será grande, mesmo
+# avaliação. O tempo de espera dos `Hasher` não escalonados será grande, mesmo
 # que o `target` de hash seja de dificuldade fácil. O tempo de resposta, que
 # leva em conta a primeira interação do processo disputador pelo processador,
 # também não vai ser muito interessante, principalmente para o último
-# `HashJob`. 
+# `Hasher`. 
 import time
 
 from typing import List
 from miner import Miner
-from hash_job import HashJob
+from hasher import Hasher
 
 class FirstComeFirstServedScheduler(Miner):
-    def __init__(self, jobs: List[HashJob], difficulty):
+    def __init__(self, jobs: List[Hasher], difficulty):
         super().__init__(jobs, difficulty)
 
         self.done = False
@@ -35,23 +35,23 @@ class FirstComeFirstServedScheduler(Miner):
         if not self.current_job:
             return
 
-        print(f"Gerando hashes para o HashJob {self.current_job.id}...")
+        print(f"Gerando hashes para o Hasher {self.current_job.id}...")
         start = time.time()
         while True:
-            # Generate a SHA256 of the internal `HashJob` structure, 
+            # Generate a SHA256 of the internal `Hasher` structure, 
             # returning its hexadecimal representation.
             hash = self.current_job.generate_hash()
             print(f"> {hash}", end="\r")
 
             if hash[:self.leading_zeros] == self.target:
-                print(f"HashJob {self.current_job.id} completed with hash {hash}\n")
+                print(f"Hasher {self.current_job.id} completed with hash {hash}\n")
                 self.current_job.done = True
                 break
 
             # Facilitate visualization with a short sleep
             time.sleep(0.01)
 
-        # The time used for this HashJob will be counted as wait time for the others.
+        # The time used for this Hasher will be counted as wait time for the others.
         elapsed = time.time() - start
         for job in self.hash_jobs:
             if job != self.current_job and not job.done:

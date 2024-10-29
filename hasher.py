@@ -4,7 +4,7 @@
 # de providenciar a carga de trabalho básica, que se resume à geração de hashes.
 import hashlib
 
-class HashJob:
+class Hasher:
     def __init__(self, id, arrival_time):
         self.id = id
         self.arrival_time = arrival_time
@@ -15,7 +15,7 @@ class HashJob:
     def __lt__(self, other):
         return self.arrival_time < other.arrival_time
 
-    # Esse método apenas une o id e o nonce em uma
+    # Esse método apenas une o `id` e o `nonce` em uma
     # string e os retorna para criarmos o hash
     def generate_hashable_str(self):
         s1 = str(self.id)

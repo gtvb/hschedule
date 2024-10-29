@@ -1,19 +1,19 @@
 # A classe `RoundRobin` também herda a classe `Miner`, e, desta vez, age de forma
-# preemptiva. Um determinado quantum de tempo dita a participação de um `HashJob`
+# preemptiva. Um determinado quantum de tempo dita a participação de um `Hasher`
 # no processador em um dado instante de tempo. Existem portanto duas maneiras
-# do controle ser passado para outro `HashJob`: Pela geração de um hash válido,
+# do controle ser passado para outro `Hasher`: Pela geração de um hash válido,
 # ou pelo fim do quantum. Como pode ser observado, esse algoritmo favorecerá 
-# bastante todos os `HashJob`s, já que todos terão uma chance de rodar, mas
+# bastante todos os `Hasher`s, já que todos terão uma chance de rodar, mas
 # pode ser bastante prejudicial para o tempo de turnaround por exemplo, se 
-# durante seu momento com o processador o `HashJob` não consiga gerar um hash
+# durante seu momento com o processador o `Hasher` não consiga gerar um hash
 # válido
 import time
 from typing import List
 from miner import Miner
-from hash_job import HashJob
+from hasher import Hasher
 
 class RoundRobinScheduler(Miner):
-    def __init__(self, jobs: List[HashJob], difficulty):
+    def __init__(self, jobs: List[Hasher], difficulty):
         super().__init__(jobs, difficulty)
 
         # Initialize the queue with a copy of jobs
@@ -25,7 +25,7 @@ class RoundRobinScheduler(Miner):
         self.current_job = self.queue[self.current_job_index]
 
     def run_job(self):
-        print(f"Gerando hashes para o HashJob {self.current_job.id}...")
+        print(f"Gerando hashes para o Hasher {self.current_job.id}...")
         end_time = self.time + self.quantum_secs
 
         while self.time < end_time:
@@ -34,7 +34,7 @@ class RoundRobinScheduler(Miner):
             print(f"> {hash}", end="\r")
 
             if hash[:self.leading_zeros] == self.target:
-                print(f"\nHashJob {self.current_job.id} completed with hash {hash}")
+                print(f"\nHasher {self.current_job.id} completed with hash {hash}")
                 self.current_job.done = True
                 # Remove the job from the queue since it's done
                 self.queue.pop(self.current_job_index)

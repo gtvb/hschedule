@@ -1,7 +1,7 @@
 import time
 import argparse
 
-from hash_job import HashJob
+from hasher import Hasher
 from fcfs import FirstComeFirstServedScheduler
 from rr import RoundRobinScheduler
 
@@ -18,10 +18,10 @@ def main():
 
     now = time.time()
     hash_jobs = [
-            HashJob(1, now + 400),
-            HashJob(2, now + 500),
-            HashJob(3, now + 100),
-            HashJob(4, now + 1000)
+            Hasher(1, now + 400),
+            Hasher(2, now + 500),
+            Hasher(3, now + 100),
+            Hasher(4, now + 1000)
     ]
 
     miner = None
