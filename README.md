@@ -18,7 +18,7 @@ options:
 ```
 
 Para utilizar o programa de sincronização utilizando o binário `python`, basta executar: `python sync.py -h` e ver as opções
-````
+```
 usage: sync [-h] -n NJOBS -m ALLOWED_MINERS [-s SEED]
 
 Mecanismos de sincronização aplicados na geração de hashes
