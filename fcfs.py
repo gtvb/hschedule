@@ -19,7 +19,6 @@ class FirstComeFirstServedScheduler(Miner):
     def __init__(self, jobs: List[Hasher], difficulty):
         super().__init__(jobs, difficulty)
 
-        self.done = False
         self.current_job_index = 0
         self.current_job = self.hash_jobs[self.current_job_index]
     
@@ -49,7 +48,7 @@ class FirstComeFirstServedScheduler(Miner):
                 break
 
             # Facilitate visualization with a short sleep
-            time.sleep(0.01)
+            time.sleep(self.sleep_delay)
 
         # The time used for this Hasher will be counted as wait time for the others.
         elapsed = time.time() - start
@@ -60,8 +59,10 @@ class FirstComeFirstServedScheduler(Miner):
     def run(self):
         # While we have jobs to process
         while not self.done:
+            if self.time < self.current_job.arrival_time:
+                print(f"Esperando o próximo job...", end="\r")
+                self.time += self.sleep_delay
+                continue
+
             self.run_job()
             self.schedule()
-
-        self.print_results()
-

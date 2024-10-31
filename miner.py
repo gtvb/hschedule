@@ -15,8 +15,10 @@ class Miner:
 
         self.time = time.time()
         self.done = False
-        self.leading_zeros = difficulty
+        self.leading_zeros = int(difficulty)
         self.target = "0" * self.leading_zeros
+
+        self.sleep_delay = 0.01
 
     def print_results(self):
         print(f"""
@@ -25,6 +27,10 @@ class Miner:
 > Número de zeros (dificuldade do hash): {self.leading_zeros}
         """)
         
+        avg_wait = 0
         for job in self.hash_jobs:
             print(f"\tTempo de espera (Hasher {job.id}): {job.wait_time:.2f} seconds")
+            avg_wait += job.wait_time
 
+        avg_wait = avg_wait/len(self.hash_jobs)
+        print(f"\nTempo de espera médio: {avg_wait} seconds")

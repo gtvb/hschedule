@@ -18,7 +18,6 @@ class RoundRobinScheduler(Miner):
 
         # Initialize the queue with a copy of jobs
         self.queue = self.hash_jobs.copy()
-        self.sleep_delay = 0.01
 
         self.quantum_secs = 1
         self.current_job_index = 0
@@ -71,5 +70,3 @@ class RoundRobinScheduler(Miner):
             if len(self.queue) > 0:
                 self.current_job_index = (self.current_job_index + 1) % len(self.queue)
                 self.current_job = self.queue[self.current_job_index]
-
-        self.print_results()
