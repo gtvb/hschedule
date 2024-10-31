@@ -9,7 +9,7 @@ from rr import RoundRobinScheduler
 def main():
     parser = argparse.ArgumentParser(
             prog="sched",
-            description="Como algoritmos de escalonamento e sincronização se comportam diante de um cenário real",
+            description="Como algoritmos de escalonamento se comportam diante de um cenário real",
             )
 
     parser.add_argument("-n", "--njobs", required=True, default=4, type=int)
