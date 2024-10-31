@@ -80,9 +80,9 @@ class BlockchainSimulator:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="sync", description="Mecanismos de sincronização aplicados na geração de hashes")
     
-    parser.add_argument("-n", "--njobs", required=True, type=int)
-    parser.add_argument("-m", "--allowed_miners", required=True, type=int)
-    parser.add_argument("-s", "--seed", type=int)
+    parser.add_argument("-n", "--njobs", required=True, type=int, help="Número de jobs")
+    parser.add_argument("-m", "--allowed_miners", required=True, type=int, help="Quantos mineiros podem ser selecionados pelo semáforo de contagem")
+    parser.add_argument("-s", "--seed", type=int, help="Seed para gerar os mesmos valores aleatórios, se necessário")
     args = parser.parse_args()
 
     if args.seed:

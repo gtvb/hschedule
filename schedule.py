@@ -12,10 +12,10 @@ def main():
             description="Como algoritmos de escalonamento se comportam diante de um cenário real",
             )
 
-    parser.add_argument("-n", "--njobs", required=True, default=4, type=int)
-    parser.add_argument("-a", "--algo", choices=["rr", "fcfs"], required=True)
-    parser.add_argument("-s", "--seed", type=int)
-    parser.add_argument("-d", "--difficulty", default=3)
+    parser.add_argument("-n", "--njobs", required=True, default=4, type=int, help="Número de jobs")
+    parser.add_argument("-a", "--algo", choices=["rr", "fcfs"], required=True, help="Algoritmo que será utilizado, podendo ser `rr` (Round Robin) ou `fcfs` (First Come First Served)")
+    parser.add_argument("-s", "--seed", type=int, help="Seed para gerar os mesmos valores aleatórios, se necessário")
+    parser.add_argument("-d", "--difficulty", default=3, help="Define o nível de dificuldade. Quanto maior, mais difícil")
     args = parser.parse_args()
 
     if args.seed:
